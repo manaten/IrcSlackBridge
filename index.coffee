@@ -15,6 +15,9 @@ client_irc.addListener 'message', (from, to, message)->
   client_slack.say process.env.SLACK_CHANNEL, "*#{from}*: #{message}"
   console.log "#{from} => #{to}: #{message}"
 
+client_irc.addListener 'notice', (from, to, message)->
+  client_slack.say process.env.SLACK_CHANNEL, "*#{from}*: #{message}"
+  console.log "#{from} => #{to}: #{message}"
 
 client_slack.addListener 'message', (from, to, message)->
   client_irc.say process.env.IRC_CHANNEL, "(#{from}): #{message}"
