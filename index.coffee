@@ -12,10 +12,10 @@ client_slack = new irc.Client process.env.SLACK_HOST, process.env.USERNAME,
 
 
 client_irc.addListener 'message', (from, to, message)->
-  client_slack.say '#general', "(#{from}): #{message}"
+  client_slack.say process.env.SLACK_CHANNEL, "(#{from}): #{message}"
   console.log "#{from} => #{to}: #{message}"
 
 
 client_slack.addListener 'message', (from, to, message)->
-  client_irc.say '#邪気眼Ⅱ', "(#{from}): #{message}"
+  client_irc.say process.env.IRC_CHANNEL, "(#{from}): #{message}"
   console.log "#{from} => #{to}: #{message}"
