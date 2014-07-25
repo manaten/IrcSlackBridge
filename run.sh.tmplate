@@ -1,0 +1,26 @@
+#!/bin/sh
+export USERNAME="bridge"
+
+export IRC_HOST=""
+export IRC_CHANNEL="#"
+
+export SLACK_HOST=""
+export SLACK_PASS=""
+export SLACK_CHANNEL="#"
+
+WD=`cd dirname $0 && pwd`
+
+case $1 in
+    "start" )
+       $WD/node_modules/forever/bin/forever $1 \
+           -p $WD/tmp/forever.run \
+           --pidfile $WD/tmp/bridge.pid \
+           -l $WD/tmp/bridge.log -a \
+           --uid $USERNAME \
+           -c $WD/node_modules/coffee-script/bin/coffee $WD/index.coffee --adapter irc -n $USERNAME
+    ;;
+    "stop" | "restart" )
+       $WD/node_modules/forever/bin/forever $1 $USERNAME
+    ;;
+    * ) echo "usage: manabot start|stop|restart" ;;
+esac
